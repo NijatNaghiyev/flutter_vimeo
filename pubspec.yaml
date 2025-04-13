@@ -1,7 +1,7 @@
 name: flutter_vimeo
 description: "Flutter package to play Vimeo videos using the InAppWebView plugin."
 version: 1.0.0
-homepage:
+repository: https://github.com/NijatNaghiyev/flutter_vimeo
 
 environment:
   sdk: ^3.7.2
