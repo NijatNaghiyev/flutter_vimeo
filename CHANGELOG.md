@@ -1,3 +1,3 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+- Initial release of the Flutter Vimeo package with features including customizable player settings, event callbacks, and support for Do Not Track (DNT) mode.
