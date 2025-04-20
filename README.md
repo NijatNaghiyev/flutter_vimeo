@@ -37,6 +37,10 @@ A Flutter package for playing Vimeo videos using the InAppWebView plugin. This p
 - Background color customization
 - Start time configuration
 
+
+# Preview
+https://github.com/user-attachments/assets/fa1f6bfb-7464-4510-a376-200b5395d990
+
 ## Installation
 
 Add the following to your `pubspec.yaml` file:
