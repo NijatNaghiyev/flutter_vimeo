@@ -39,7 +39,9 @@ A Flutter package for playing Vimeo videos using the InAppWebView plugin. This p
 
 
 # Preview
-https://github.com/user-attachments/assets/fa1f6bfb-7464-4510-a376-200b5395d990
+
+https://github.com/user-attachments/assets/f7c76ea4-b16a-4816-86ba-390f7de8566b
+
 
 ## Installation
 
