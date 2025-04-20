@@ -11,7 +11,7 @@ typedef DurationCallBack =
 ///  and event callbacks using the [InAppWebView]
 class FlutterVimeoPlayer extends StatefulWidget {
   /// Initializes the VimeoVideoPlayer widget
-  FlutterVimeoPlayer({
+  const FlutterVimeoPlayer({
     required this.videoId,
     super.key,
     this.isAutoPlay = false,
@@ -36,7 +36,10 @@ class FlutterVimeoPlayer extends StatefulWidget {
     this.onInAppWebViewReceivedError,
     this.onEnterFullscreen,
     this.onExitFullscreen,
-  }) : assert(videoId.isNotEmpty, 'videoId cannot be empty!');
+    this.mediaPlaybackRequiresUserGesture = false,
+    this.allowsInlineMediaPlayback = true,
+    this.initialScale,
+  });
 
   /// Used to enable or disable logging
   ///  for debugging purposes
@@ -143,6 +146,14 @@ class FlutterVimeoPlayer extends StatefulWidget {
   /// Defines the start time of the video in seconds
   final double startTime;
 
+  /// Set to true to prevent HTML5 audio or video from autoplaying
+  final bool mediaPlaybackRequiresUserGesture;
+
+  /// Set to true to allow inline media playback
+  final bool allowsInlineMediaPlayback;
+
+  final int? initialScale;
+
   @override
   State<FlutterVimeoPlayer> createState() => _FlutterVimeoPlayerState();
 }
@@ -153,8 +164,10 @@ class _FlutterVimeoPlayerState extends State<FlutterVimeoPlayer>
   Widget build(BuildContext context) {
     return InAppWebView(
       initialSettings: InAppWebViewSettings(
-        mediaPlaybackRequiresUserGesture: false,
-        allowsInlineMediaPlayback: true,
+        initialScale: widget.initialScale,
+        mediaPlaybackRequiresUserGesture:
+            widget.mediaPlaybackRequiresUserGesture,
+        allowsInlineMediaPlayback: widget.allowsInlineMediaPlayback,
       ),
       onEnterFullscreen: widget.onEnterFullscreen,
       onExitFullscreen: widget.onExitFullscreen,

@@ -70,17 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder:
-                          (context) => VimeoPlayerPage(
-                            videoId: _videoIdController.text,
-                            isAutoPlay: _isAutoPlay,
-                            isLooping: _isLooping,
-                            isMuted: _isMuted,
-                            showTitle: _showTitle,
-                            showByline: _showByline,
-                            showControls: _showControls,
-                            enableDNT: _enableDNT,
-                          ),
+                      builder: (context) => VimeoPlayerPage(
+                        videoId: _videoIdController.text,
+                        isAutoPlay: _isAutoPlay,
+                        isLooping: _isLooping,
+                        isMuted: _isMuted,
+                        showTitle: _showTitle,
+                        showByline: _showByline,
+                        showControls: _showControls,
+                        enableDNT: _enableDNT,
+                      ),
                     ),
                   );
                 }

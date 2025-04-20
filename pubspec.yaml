@@ -5,7 +5,7 @@ repository: https://github.com/NijatNaghiyev/flutter_vimeo
 
 environment:
   sdk: ^3.7.2
-  flutter: ">=1.17.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
