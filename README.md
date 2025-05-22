@@ -37,11 +37,9 @@ A Flutter package for playing Vimeo videos using the InAppWebView plugin. This p
 - Background color customization
 - Start time configuration
 
-
 # Preview
 
-https://github.com/user-attachments/assets/f7c76ea4-b16a-4816-86ba-390f7de8566b
-
+<https://github.com/user-attachments/assets/f7c76ea4-b16a-4816-86ba-390f7de8566b>
 
 ## Installation
 
@@ -49,7 +47,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_vimeo: ^1.0.0
+  flutter_vimeo: ^latest-version
 ```
 
 Then run:
@@ -78,39 +76,73 @@ class MyVideoPlayer extends StatelessWidget {
 }
 ```
 
-### Advanced Usage
+### Advanced Usage with Controller
 
 ```dart
-FlutterVimeoPlayer(
-  videoId: '123456789',
-  isAutoPlay: true,
-  isLooping: false,
-  isMuted: false,
-  showTitle: true,
-  showByline: true,
-  showControls: true,
-  enableDNT: true,
-  startTime: 0.0,
-  backgroundColor: Colors.black,
-  onReady: (totalDuration, currentDuration) {
-    debugPrint('Video ready: Total duration: $totalDuration');
-  },
-  onPlay: (totalDuration, currentDuration) {
-    debugPrint('Video playing: Current duration: $currentDuration');
-  },
-  onPause: (totalDuration, currentDuration) {
-    debugPrint('Video paused: Current duration: $currentDuration');
-  },
-  onFinish: (totalDuration, currentDuration) {
-    debugPrint('Video finished');
-  },
-  onSeek: (totalDuration, currentDuration) {
-    debugPrint('Video seeked to: $currentDuration');
-  },
-  onTimeUpdate: (totalDuration, currentDuration) {
-    debugPrint('Time updated: $currentDuration');
-  },
-)
+class AdvancedVimeoPlayerScreen extends StatefulWidget {
+  const AdvancedVimeoPlayerScreen({super.key});
+
+  @override
+  State<AdvancedVimeoPlayerScreen> createState() => _AdvancedVimeoPlayerScreenState();
+}
+
+class _AdvancedVimeoPlayerScreenState extends State<AdvancedVimeoPlayerScreen> {
+   FlutterVimeoController controller = FlutterVimeoController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Advanced Vimeo Player')),
+      body: Column(
+        children: [
+          FlutterVimeoPlayer(
+            videoId: '123456789',
+            controller: controller,
+            isAutoPlay: true,
+            showTitle: true,
+            backgroundColor: Colors.black,
+            onReady: (totalDuration, currentDuration) {
+              debugPrint('Video ready: Total duration: $totalDuration');
+            },
+            onPlay: (totalDuration, currentDuration) {
+              debugPrint('Video playing: Current duration: $currentDuration');
+            },
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () => controller.play(),
+                child: const Text('Play'),
+              ),
+              ElevatedButton(
+                onPressed: () => controller.pause(),
+                child: const Text('Pause'),
+              ),
+              ElevatedButton(
+                onPressed: () => controller.seekTo(30.0),
+                child: const Text('Seek to 30s'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+## FlutterVimeoController
+
+The `FlutterVimeoController` provides methods to control the Vimeo player programmatically:
+
+```dart
+// Create a controller
+final controller = FlutterVimeoController();
+
+// Play the video
+controller.nextVideoWithJS('987654321');
 ```
 
 ## Getting a Vimeo Video ID
@@ -141,6 +173,7 @@ To get a Vimeo video ID:
 | `onFinish` | DurationCallBack? | null | Called when the video finishes |
 | `onSeek` | DurationCallBack? | null | Called when seeking in the video |
 | `onTimeUpdate` | DurationCallBack? | null | Called when the video time updates |
+| `controller` | FlutterVimeoController? | null | Controller to manage the player programmatically |
 
 ## Example
 

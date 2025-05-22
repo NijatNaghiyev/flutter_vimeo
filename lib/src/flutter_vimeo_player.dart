@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_vimeo/src/constants.dart';
+import 'package:flutter_vimeo/src/flutter_vimeo_controller.dart';
 import 'package:flutter_vimeo/src/flutter_vimeo_player_mixin.dart';
 
 /// Callback function triggered when the video duration is modified
@@ -14,6 +15,7 @@ class FlutterVimeoPlayer extends StatefulWidget {
   const FlutterVimeoPlayer({
     required this.videoId,
     super.key,
+    this.flutterVimeoController,
     this.isAutoPlay = false,
     this.isLooping = false,
     this.isMuted = false,
@@ -40,6 +42,10 @@ class FlutterVimeoPlayer extends StatefulWidget {
     this.allowsInlineMediaPlayback = true,
     this.initialScale,
   });
+
+  ///? The [FlutterVimeoController] used to control the web view
+  ///? This is the controller that is used to control the web view.
+  final FlutterVimeoController? flutterVimeoController;
 
   /// Used to enable or disable logging
   ///  for debugging purposes
@@ -176,7 +182,14 @@ class _FlutterVimeoPlayerState extends State<FlutterVimeoPlayer>
         baseUrl: WebUri(Constants.webUri),
       ),
       onConsoleMessage: onConsoleMessage,
-      onWebViewCreated: widget.onInAppWebViewCreated,
+      onWebViewCreated: (controller) {
+        //? Sets the [InAppWebViewController] used to control the web view
+        widget.flutterVimeoController?.inAppWebViewController = controller;
+
+        //? Trigger the onInAppWebViewCreated callback
+        //? when the WebView is created
+        widget.onInAppWebViewCreated?.call(controller);
+      },
       onLoadStart: widget.onInAppWebViewLoadStart,
       onLoadStop: widget.onInAppWebViewLoadStop,
       onReceivedError: widget.onInAppWebViewReceivedError,

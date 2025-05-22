@@ -38,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _showControls = true;
   bool _enableDNT = true;
 
+  FlutterVimeoController flutterVimeoController = FlutterVimeoController();
+
   @override
   void dispose() {
     _videoIdController.dispose();
@@ -71,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => VimeoPlayerPage(
+                        flutterVimeoController: flutterVimeoController,
                         videoId: _videoIdController.text,
                         isAutoPlay: _isAutoPlay,
                         isLooping: _isLooping,
@@ -158,6 +161,7 @@ class VimeoPlayerPage extends StatelessWidget {
     required this.showByline,
     required this.showControls,
     required this.enableDNT,
+    required this.flutterVimeoController,
   });
 
   final String videoId;
@@ -168,12 +172,14 @@ class VimeoPlayerPage extends StatelessWidget {
   final bool showByline;
   final bool showControls;
   final bool enableDNT;
+  final FlutterVimeoController flutterVimeoController;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Vimeo Player')),
       body: FlutterVimeoPlayer(
+        flutterVimeoController: flutterVimeoController,
         videoId: videoId,
         isAutoPlay: isAutoPlay,
         isLooping: isLooping,
