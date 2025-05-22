@@ -87,7 +87,7 @@ class AdvancedVimeoPlayerScreen extends StatefulWidget {
 }
 
 class _AdvancedVimeoPlayerScreenState extends State<AdvancedVimeoPlayerScreen> {
-   FlutterVimeoController controller = FlutterVimeoController();
+   FlutterVimeoController? controller ;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +101,10 @@ class _AdvancedVimeoPlayerScreenState extends State<AdvancedVimeoPlayerScreen> {
             isAutoPlay: true,
             showTitle: true,
             backgroundColor: Colors.black,
+            onInAppWebViewCreated: (controller){
+              controller = FlutterVimeoController(
+                              inAppWebViewController: controller);
+            },
             onReady: (totalDuration, currentDuration) {
               debugPrint('Video ready: Total duration: $totalDuration');
             },
@@ -139,10 +143,15 @@ The `FlutterVimeoController` provides methods to control the Vimeo player progra
 
 ```dart
 // Create a controller
-final controller = FlutterVimeoController();
+FlutterVimeoController? controller;
+
+onInAppWebViewCreated: (controller){
+              controller = FlutterVimeoController(
+                              inAppWebViewController: controller);
+            },
 
 // Play the video
-controller.nextVideoWithJS('987654321');
+controller?.nextVideoWithJS('987654321');
 ```
 
 ## Getting a Vimeo Video ID

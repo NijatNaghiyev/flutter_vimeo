@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _showControls = true;
   bool _enableDNT = true;
 
-  FlutterVimeoController flutterVimeoController = FlutterVimeoController();
+  FlutterVimeoController? flutterVimeoController;
 
   @override
   void dispose() {
@@ -73,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => VimeoPlayerPage(
-                        flutterVimeoController: flutterVimeoController,
                         videoId: _videoIdController.text,
                         isAutoPlay: _isAutoPlay,
                         isLooping: _isLooping,
@@ -82,6 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         showByline: _showByline,
                         showControls: _showControls,
                         enableDNT: _enableDNT,
+                        onInAppWebViewCreated: (controller) {
+                          flutterVimeoController = FlutterVimeoController(
+                              inAppWebViewController: controller);
+                        },
                       ),
                     ),
                   );
@@ -161,7 +164,7 @@ class VimeoPlayerPage extends StatelessWidget {
     required this.showByline,
     required this.showControls,
     required this.enableDNT,
-    required this.flutterVimeoController,
+    required this.onInAppWebViewCreated,
   });
 
   final String videoId;
@@ -172,14 +175,13 @@ class VimeoPlayerPage extends StatelessWidget {
   final bool showByline;
   final bool showControls;
   final bool enableDNT;
-  final FlutterVimeoController flutterVimeoController;
+  final Function(dynamic controller)? onInAppWebViewCreated;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Vimeo Player')),
       body: FlutterVimeoPlayer(
-        flutterVimeoController: flutterVimeoController,
         videoId: videoId,
         isAutoPlay: isAutoPlay,
         isLooping: isLooping,
@@ -188,6 +190,7 @@ class VimeoPlayerPage extends StatelessWidget {
         showByline: showByline,
         showControls: showControls,
         enableDNT: enableDNT,
+        onInAppWebViewCreated: onInAppWebViewCreated,
         onReady: (totalDuration, currentDuration) {
           debugPrint('Video ready: Total duration: $totalDuration');
         },

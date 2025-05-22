@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Improvments
+
 ## 1.0.3
 
 - Add FlutterVimeoController for enhanced video control and update README
